@@ -240,7 +240,6 @@ class DashboardScreen extends StatelessWidget {
               Text(title),
             ],
           ),
-          //const SizedBox(height: 12),
           /*Text(
             title,
             style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
@@ -296,7 +295,7 @@ class DashboardScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(width: 13),
+              const SizedBox(width: 12),
               if (change.isNotEmpty)
                 Column(
                   children: [
