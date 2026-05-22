@@ -296,7 +296,7 @@ class DashboardScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(width: 13),
+              const SizedBox(width: 12),
               if (change.isNotEmpty)
                 Column(
                   children: [
