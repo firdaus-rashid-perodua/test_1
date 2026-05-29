@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-/*void main() {
+void main() {
   runApp(const MyApp());
-}*/
+}
 
-/*class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //title: 'Dashboard',
+      title: 'Dashboard',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -19,14 +19,13 @@ import 'package:flutter/material.dart';
       home: const DashboardScreen(),
     );
   }
-}*/
+}
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('title')),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
@@ -72,6 +71,7 @@ class HomePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
                       'Registration',
@@ -93,7 +93,16 @@ class HomePage extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          TextSpan(text: ' / ', style: TextStyle(fontSize: 24)),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Container(height: 2, width: 150, color: Colors.black87),
+                    //const SizedBox(height: 16),
+                    RichText(
+                      text: const TextSpan(
+                        style: TextStyle(color: Colors.black),
+                        children: [
                           TextSpan(
                             text: '360,000',
                             style: TextStyle(
@@ -104,8 +113,6 @@ class HomePage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Container(height: 2, width: 180, color: Colors.black87),
                     const SizedBox(height: 16),
                     const Text(
                       'Cumulative registration for year 2026',
@@ -144,7 +151,7 @@ class HomePage extends StatelessWidget {
                     percentage: 100,
                     percentageColor: const Color(0xFF4CAF50),
                     percentageText: 'Surplus',
-                    change: '',
+                    change: '+0.0k',
                     changeColor: Colors.green,
                   ),
                   _buildMetricCard(
@@ -166,7 +173,7 @@ class HomePage extends StatelessWidget {
                     percentage: 122,
                     percentageColor: const Color(0xFF4CAF50),
                     percentageText: 'Surplus',
-                    change: '',
+                    change: '+0.23m',
                     changeColor: Colors.green,
                   ),
                 ],
@@ -295,7 +302,7 @@ class HomePage extends StatelessWidget {
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
+                        horizontal: 11,
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
@@ -354,7 +361,7 @@ class HomePage extends StatelessWidget {
           height: 56,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(color: color.withValues(alpha: 0.3), width: 2.5),
+            border: Border.all(color: color.withOpacity(0.3), width: 2.5),
           ),
           child: Icon(icon, color: color, size: 28),
         ),

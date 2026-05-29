@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'main2.dart';
-import 'detailPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,34 +21,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Changed to StatefulWidget
-class RegistrationScreen extends StatefulWidget {
+class RegistrationScreen extends StatelessWidget {
   const RegistrationScreen({super.key});
-
-  @override
-  State<RegistrationScreen> createState() => _RegistrationScreenState();
-}
-
-class _RegistrationScreenState extends State<RegistrationScreen> {
-  String _lastClicked = "Nothing clicked yet";
-  int _clickCount = 0;
-
-  void _handleCardTap(String cardName) {
-    setState(() {
-      _lastClicked = cardName;
-      _clickCount++;
-    });
-
-    // Print to console (Debug)
-    print('✅ Card Clicked: $cardName | Total clicks: $_clickCount');
-
-    // Navigate to detail page
-    Navigator.push(
-      context,
-      //MaterialPageRoute(builder: (context) => HomePage()),
-      MaterialPageRoute(builder: (context) => DetailPage(title: cardName)),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +32,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            print('back button pressed');
-          },
+          onPressed: () {},
         ),
         title: const Text(
           'REGISTRATION',
@@ -84,22 +54,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Status Indicator
-            /*Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.blue.shade50,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                'Last clicked: $_lastClicked\nTotal taps: $_clickCount',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
+            // Date Header
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const Text(
+                  'May 2026',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                 ),
-              ),
+                const SizedBox(width: 8),
+                const Icon(Icons.access_time, color: Colors.black87),
+              ],
             ),
-            const SizedBox(height: 24),*/
+            const SizedBox(height: 24),
 
             // Yearly Target
             _buildTargetCard(
@@ -110,7 +77,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               target: '360,000',
               percentage: 22,
               circleColor: const Color(0xFFCDDC39),
-              onTap: () => _handleCardTap('Yearly Target'),
+              isPercentage: true,
             ),
             const SizedBox(height: 16),
 
@@ -123,11 +90,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               target: '34,000',
               percentage: 34,
               circleColor: const Color(0xFF26A69A),
-              onTap: () => _handleCardTap('Monthly Target'),
+              isPercentage: true,
             ),
             const SizedBox(height: 16),
 
-            // Comparison Cards (not clickable for now)
+            // Over Last Month
             _buildComparisonCard(
               title: 'Over last month',
               subtitle: 'May 2026 vs May 2025',
@@ -140,6 +107,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
             const SizedBox(height: 16),
 
+            // Over Last Year
             _buildComparisonCard(
               title: 'Over last year',
               subtitle: 'May 2026 vs May 2025',
@@ -163,148 +131,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     required String actual,
     required String target,
     required int percentage,
-    required Color circleColor,
-    VoidCallback? onTap,
-  }) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
-      child: Card(
-        elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(6),
-                          decoration: BoxDecoration(
-                            color: iconColor.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Icon(
-                            Icons.grid_view,
-                            color: iconColor,
-                            size: 20,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Text(
-                          title,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      subtitle,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.black87,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Text('actual : $actual'),
-                    Text('target : $target'),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 16),
-              _buildPercentageCircle(percentage, circleColor),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
-  // Keep your existing helper methods
-  Widget _buildComparisonCard({
-    required String title,
-    required String subtitle,
-    required String currentLabel,
-    required String currentValue,
-    required String previousLabel,
-    required String previousValue,
-    required String difference,
     required Color circleColor,
+    required bool isPercentage,
   }) {
-<<<<<<< HEAD
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            // ignore: duplicate_ignore
-            // ignore: deprecated_member_use
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(icon, size: 24),
-              ),
-              //const Spacer(),
-              const SizedBox(width: 10),
-              Text(title),
-            ],
-          ),
-          /*Text(
-            title,
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 8),*/
-          const SizedBox(height: 12),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                current,
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Text(
-                ' / ',
-                style: TextStyle(fontSize: 16, color: Colors.grey),
-              ),
-              Text(
-                target,
-                style: const TextStyle(fontSize: 16, color: Colors.grey),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          // Circular Progress
-          Row(
-            children: [
-              Stack(
-                alignment: Alignment.center,
-=======
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -315,7 +145,76 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
->>>>>>> test-branch-1
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: iconColor.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(
+                          Icons.grid_view,
+                          color: iconColor,
+                          size: 20,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    subtitle,
+                    style: const TextStyle(fontSize: 16, color: Colors.black87),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'actual : $actual',
+                    style: const TextStyle(fontSize: 15),
+                  ),
+                  Text(
+                    'target : $target',
+                    style: const TextStyle(fontSize: 15),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 16),
+            _buildPercentageCircle(percentage, circleColor),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildComparisonCard({
+    required String title,
+    required String subtitle,
+    required String currentLabel,
+    required String currentValue,
+    required String previousLabel,
+    required String previousValue,
+    required String difference,
+    required Color circleColor,
+  }) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
@@ -342,10 +241,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  Text(subtitle, style: const TextStyle(fontSize: 15)),
+                  Text(
+                    subtitle,
+                    style: const TextStyle(fontSize: 15, color: Colors.black87),
+                  ),
                   const SizedBox(height: 16),
-                  Text('$currentLabel : $currentValue'),
-                  Text('$previousLabel : $previousValue'),
+                  Text(
+                    '$currentLabel : $currentValue',
+                    style: const TextStyle(fontSize: 15),
+                  ),
+                  Text(
+                    '$previousLabel : $previousValue',
+                    style: const TextStyle(fontSize: 15),
+                  ),
                 ],
               ),
             ),
@@ -374,9 +282,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),
           ),
-          Text(
-            '$percentage%',
-            style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                '$percentage%',
+                style: const TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -400,7 +316,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ),
           Text(
             difference,
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
             textAlign: TextAlign.center,
           ),
         ],
