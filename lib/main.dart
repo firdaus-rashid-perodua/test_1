@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'main2.dart';
+import 'detailPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,8 +23,34 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class RegistrationScreen extends StatelessWidget {
+// Changed to StatefulWidget
+class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
+
+  @override
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
+}
+
+class _RegistrationScreenState extends State<RegistrationScreen> {
+  String _lastClicked = "Nothing clicked yet";
+  int _clickCount = 0;
+
+  void _handleCardTap(String cardName) {
+    setState(() {
+      _lastClicked = cardName;
+      _clickCount++;
+    });
+
+    // Print to console (Debug)
+    print('✅ Card Clicked: $cardName | Total clicks: $_clickCount');
+
+    // Navigate to detail page
+    Navigator.push(
+      context,
+      //MaterialPageRoute(builder: (context) => HomePage()),
+      MaterialPageRoute(builder: (context) => DetailPage(title: cardName)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +60,9 @@ class RegistrationScreen extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {},
+          onPressed: () {
+            print('back button pressed');
+          },
         ),
         title: const Text(
           'REGISTRATION',
@@ -54,19 +84,22 @@ class RegistrationScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Date Header
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                const Text(
-                  'May 2026',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            // Status Indicator
+            /*Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.blue.shade50,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                'Last clicked: $_lastClicked\nTotal taps: $_clickCount',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
                 ),
-                const SizedBox(width: 8),
-                const Icon(Icons.access_time, color: Colors.black87),
-              ],
+              ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 24),*/
 
             // Yearly Target
             _buildTargetCard(
@@ -77,7 +110,7 @@ class RegistrationScreen extends StatelessWidget {
               target: '360,000',
               percentage: 22,
               circleColor: const Color(0xFFCDDC39),
-              isPercentage: true,
+              onTap: () => _handleCardTap('Yearly Target'),
             ),
             const SizedBox(height: 16),
 
@@ -90,11 +123,11 @@ class RegistrationScreen extends StatelessWidget {
               target: '34,000',
               percentage: 34,
               circleColor: const Color(0xFF26A69A),
-              isPercentage: true,
+              onTap: () => _handleCardTap('Monthly Target'),
             ),
             const SizedBox(height: 16),
 
-            // Over Last Month
+            // Comparison Cards (not clickable for now)
             _buildComparisonCard(
               title: 'Over last month',
               subtitle: 'May 2026 vs May 2025',
@@ -107,7 +140,6 @@ class RegistrationScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Over Last Year
             _buildComparisonCard(
               title: 'Over last year',
               subtitle: 'May 2026 vs May 2025',
@@ -131,70 +163,71 @@ class RegistrationScreen extends StatelessWidget {
     required String actual,
     required String target,
     required int percentage,
-
     required Color circleColor,
-    required bool isPercentage,
+    VoidCallback? onTap,
   }) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                          color: iconColor.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(8),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: iconColor.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Icon(
+                            Icons.grid_view,
+                            color: iconColor,
+                            size: 20,
+                          ),
                         ),
-                        child: Icon(
-                          Icons.grid_view,
-                          color: iconColor,
-                          size: 20,
+                        const SizedBox(width: 12),
+                        Text(
+                          title,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      subtitle,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black87,
                       ),
-                      const SizedBox(width: 12),
-                      Text(
-                        title,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    subtitle,
-                    style: const TextStyle(fontSize: 16, color: Colors.black87),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'actual : $actual',
-                    style: const TextStyle(fontSize: 15),
-                  ),
-                  Text(
-                    'target : $target',
-                    style: const TextStyle(fontSize: 15),
-                  ),
-                ],
+                    ),
+                    const SizedBox(height: 16),
+                    Text('actual : $actual'),
+                    Text('target : $target'),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(width: 16),
-            _buildPercentageCircle(percentage, circleColor),
-          ],
+              const SizedBox(width: 16),
+              _buildPercentageCircle(percentage, circleColor),
+            ],
+          ),
         ),
       ),
     );
   }
 
+  // Keep your existing helper methods
   Widget _buildComparisonCard({
     required String title,
     required String subtitle,
@@ -241,19 +274,10 @@ class RegistrationScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    subtitle,
-                    style: const TextStyle(fontSize: 15, color: Colors.black87),
-                  ),
+                  Text(subtitle, style: const TextStyle(fontSize: 15)),
                   const SizedBox(height: 16),
-                  Text(
-                    '$currentLabel : $currentValue',
-                    style: const TextStyle(fontSize: 15),
-                  ),
-                  Text(
-                    '$previousLabel : $previousValue',
-                    style: const TextStyle(fontSize: 15),
-                  ),
+                  Text('$currentLabel : $currentValue'),
+                  Text('$previousLabel : $previousValue'),
                 ],
               ),
             ),
@@ -282,17 +306,9 @@ class RegistrationScreen extends StatelessWidget {
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),
           ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                '$percentage%',
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
+          Text(
+            '$percentage%',
+            style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),
         ],
       ),
@@ -316,11 +332,7 @@ class RegistrationScreen extends StatelessWidget {
           ),
           Text(
             difference,
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
-            ),
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
         ],

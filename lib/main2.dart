@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-void main() {
+/*void main() {
   runApp(const MyApp());
-}
+}*/
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+/*class HomePage extends StatelessWidget {
+  const HomePage({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Dashboard',
+      //title: 'Dashboard',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -19,13 +19,14 @@ class MyApp extends StatelessWidget {
       home: const DashboardScreen(),
     );
   }
-}
+}*/
 
-class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('title')),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
@@ -298,7 +299,7 @@ class DashboardScreen extends StatelessWidget {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: changeColor.withOpacity(0.15),
+                        color: changeColor.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
@@ -353,7 +354,7 @@ class DashboardScreen extends StatelessWidget {
           height: 56,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(color: color.withOpacity(0.3), width: 2.5),
+            border: Border.all(color: color.withValues(alpha: 0.3), width: 2.5),
           ),
           child: Icon(icon, color: color, size: 28),
         ),
