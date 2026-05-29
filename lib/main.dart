@@ -238,73 +238,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     required String difference,
     required Color circleColor,
   }) {
-<<<<<<< HEAD
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            // ignore: duplicate_ignore
-            // ignore: deprecated_member_use
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(icon, size: 24),
-              ),
-              //const Spacer(),
-              const SizedBox(width: 10),
-              Text(title),
-            ],
-          ),
-          /*Text(
-            title,
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 8),*/
-          const SizedBox(height: 12),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                current,
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Text(
-                ' / ',
-                style: TextStyle(fontSize: 16, color: Colors.grey),
-              ),
-              Text(
-                target,
-                style: const TextStyle(fontSize: 16, color: Colors.grey),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          // Circular Progress
-          Row(
-            children: [
-              Stack(
-                alignment: Alignment.center,
-=======
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -315,7 +248,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
->>>>>>> test-branch-1
                 children: [
                   Row(
                     children: [
